@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<body>
+    {% block content %}   
+    <form method="POST">
+        {% csrf_token %}
+        <div class="col-md-12">
+            
+                {{fields}}
+                
+                <button type="submit">submit</button>
+                {% if next_url %}
+                    <input type="hidden" name="next" value="{{ next_url }}" />                       
+                {% endif %} 
+        </div>
+    </form>
+       
+        {{msg}}
+        
+   {% endblock %}
+    
+</body>
+

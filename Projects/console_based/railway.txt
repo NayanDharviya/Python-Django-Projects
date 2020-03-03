@@ -1,0 +1,33 @@
+ADMIN
+
+step 1------admin has to login into app
+
+step 2---- admin can add the train details
+	a)train name
+	b)train number
+	c)no of ac first class seat to be reserved 
+	d)no of ac second class seat to be reserved
+	e)no of  ac thirdclass seat to be reserved
+	f)no of sleeper class seat to be reserved
+	g)starting point
+	h)destination point
+
+
+USER
+
+1-login if already a member else register in app and login
+2- can view the details of train
+3- can check the seat availability
+4- book a ticket
+	-train number
+	-train name
+	-passenger name
+	-age
+	-1st class,2nd class,3rd class,sleeper class
+
+<after booking successfull....... show amount,pnr number,status>
+	
+5- cancel a ticket
+6 - pnr status
+
+

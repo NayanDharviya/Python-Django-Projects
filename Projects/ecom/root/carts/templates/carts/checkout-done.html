@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% csrf_token %}
+<div class="col-6 mx-auto text-center">
+    <h1 class="primary">Thank You for Your order! Your Transaction id is {{ transid }}</h1>
+</div>
+{% endblock %}

@@ -1,0 +1,5 @@
+create table train
+(tname varchar(40),tno int(10) primary key,ac_1class int(10),ac_2class int(10),ac_3class int(10),sleeper_class int(10),s_point varchar(30),e_point varchar(30));
+
+create table admin
+(username varchar(30),password varchar(30));

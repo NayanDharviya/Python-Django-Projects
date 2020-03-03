@@ -1,0 +1,92 @@
+ {% include 'base/css.html' %}
+  <body>
+    
+    {% include 'base/menu.html' %}
+
+    {% block content %}
+    {% endblock %}
+    
+    {% include 'base/js.html' %}
+
+  </body>
+    <script>
+      $(document).ready(function(){
+        // the above .form-product-ajax is a class and it is comming from product/update-cart.html 
+        // we have to add the class='form-product-ajax' in product/update-cart.html
+        var productForm=$('.form-product-ajax');
+        productForm.submit(function(event){
+          event.preventDefault();
+          var currenturl=window.location.href
+          // alert(currenturl)
+          
+          // below code
+          var thisForm=$(this);
+          var httpMethod=thisForm.attr('method');
+          var actionpoint=productForm.attr('end-point');
+          var formData=thisForm.serialize();
+          $.ajax({
+              url:actionpoint,
+              method:httpMethod,
+              data:formData,
+              success:function(data){
+                if (currenturl=='http://127.0.0.1:8000/cart/list'){
+                  cartrefresh();
+                }
+                var submitspan = thisForm.find('.submit-span')
+                if (data.added){
+                  submitspan.html(' <button type="submit" class="btn btn-link">Remove</button>')
+                }
+                else {
+                  submitspan.html('<button type="submit" class="btn btn-success">Add to cart</button>')
+                }
+                // this is comes from base.html from cart logo navbar
+                var countspan=$('.cart-count-ajax')
+                countspan.text(data.cartUpdateapi)
+              },
+              error:function(errorData){
+                console.log('error from update_cart_api')
+                console.log(errorData)
+              }
+          })
+        })
+        function cartrefresh(){
+          console.log('in cart')
+          var cartTable=$('.cart-table');
+          var cartBody=cartTable.find('.cart-body');
+          var cartRow=cartBody.find('.cart-product');
+          var currenturl=window.location.href;
+          $.ajax({
+            url:'/cart/apihome',
+            method:'GET',
+            data:{},
+            success:function(data){
+              var hiddenCartItemRemoveForm = $(".cart-item-remove-from")
+                  if (data.products.length > 0){
+                    cartRow.html(" ")
+                      i = data.products.length
+                      // the below code defines the for loop and the index parameter define the data of jsondata in views.py and value field defines the all products information which is defined in cart/views.py/cart_home_api()
+                      $.each(data.products, function(index, value){
+                        console.log(value)
+                        
+                        var newCartItemRemove = hiddenCartItemRemoveForm.clone()
+                        // console.log('yes')
+                        newCartItemRemove.css("display", "block")
+                        newCartItemRemove.find(".cart-item-product-id").val(value.id)
+                          cartBody.prepend("<tr><th scope=\"row\">" + i + "</th><td><a href='" + value.detail_url + "'>" + value.title + "</a></td><td>" + newCartItemRemove.html() + "</td><td>" + value.price + "</td></tr>")
+                          i --
+                      })
+                      cartBody.find(".cart-subtotal").text(data.subtotal)
+                      cartBody.find(".cart-total").text(data.total)
+                    }
+                    else{
+                      window.location.href = currenturl
+                    }
+            },
+            error:function(errorData){
+              console.log('error from update_cart_api')
+              console.log(errorData)
+            }
+          })
+        }  
+      })
+    </script>

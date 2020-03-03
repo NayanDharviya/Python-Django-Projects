@@ -1,0 +1,36 @@
+create or replace trigger ticketcancel
+after delete on reserv
+for each row
+begin
+
+	declare ticket1 int;
+	declare s1 varchar(100);
+	declare wl1 int;
+	declare tic int;
+	
+
+	select ticket into ticket1,status into s1
+	from reserv
+	where pnr_no=old.pnr_no ;
+
+
+	if s1='Confirmed' then
+		while ticket1>0	
+		do
+			select  wl into wl1,ticket into tic
+			from reserv
+			where status='Waiting List' and datetimes in (select min(datetimes) from reserv);
+			
+			if wl1<=ticket1 then 
+				ticket1=ticket1-wl1;
+				update reserv set ticket=wl1,wl=0,status='Confirmed' where datetimes in (select min(datetimes) from reserv where status='Waiting List');
+			else if wl1>ticket1 then
+				wl1=wl1-ticket1
+				update reserv set wl=wl1,ticket=tic+ticket1 where datetimes  in (select min(datetimes) from reserv where status='Waiting List');
+				ticket1=0
+		
+			end if;
+			
+		end while;
+	end if;
+end//

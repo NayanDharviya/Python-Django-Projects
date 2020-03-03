@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- <table border=3>
+    <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+    </tr>
+    {% for product in object_list %}
+    <tr>
+        <td>{{product.pname}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.image}}</td>
+    </tr>
+    {% endfor %}
+</table>
+ -->
+
+
+ <!-- here object_list is default for class based view and object_list is context pass from con(dictionary)  -->
+ 
+ 
+ <div class="row">
+ {% for product in object_list %}
+ 
+     <div class="col-4 col-sm-4">
+         {% include 'products/snippets/card.html' with object=product %}
+     </div>
+     {% if forloop.counter|divisibleby:3 %}
+     </div>  
+     <!-- above div close the row -->
+     <div class="row">
+         <div class="col"><hr></div>
+    </div>
+    <div class="row">
+    {% endif %}
+
+
+ {% endfor %}
+</div>
+
+
+{% endblock %}

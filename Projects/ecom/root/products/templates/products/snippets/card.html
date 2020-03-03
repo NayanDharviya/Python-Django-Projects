@@ -1,0 +1,11 @@
+<div class="card" style="width: 18rem;">
+    <img src="{{ object.image.url }}" class="card-img-top" alt="Maggie" style="width:280px; height:250px">
+    <div class="card-body">
+      <h5 class="card-title">{{object.pname}}</h5>
+      <p class="card-text">{{object.createdate|timesince}} ago</p>
+      <p class="card-text">{{object.description|truncatewords:10}}</p>
+      <h1 class="card-head">{{object.price}}</h1>
+      <h6 class="card-text">Quantity:-{{object.quantity}}</h6>
+      <a href="{{ object.get_adsolute_url }}" class="btn btn-primary">View</a>
+    </div>
+  </div>

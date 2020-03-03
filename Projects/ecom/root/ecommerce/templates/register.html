@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+<body>
+    {% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="col-md-12">
+                {{req}}
+
+                <button type="submit">SignIn</button>
+                {{msg}}
+        </div>
+    </form>
+        <!-- <div class="col-md-12"></div>
+            {% if name1 %}
+                <h1>Your name is {{name1}}</h1>
+            {% endif %}
+        </div>
+    -->
+    {% endblock %}
+</body>
+

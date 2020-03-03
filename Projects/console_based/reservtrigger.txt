@@ -1,0 +1,22 @@
+create or replace trigger reservticket
+before insert on reserv
+for each row
+begin
+if new.seat_class='ac_1class'
+then
+update train set ac_1class=ac_1class-new.ticket
+where tno=new.tno;
+elseif new.seat_class='ac_2class'
+then
+update train set ac_2class=ac_2class-new.ticket
+where tno=new.tno;
+elseif new.seat_class='ac_3class'
+then
+update train set ac_3class=ac_3class-new.ticket
+where tno=new.tno;
+else
+update train set sleeper_class=sleeper_class-new.ticket
+where tno=new.tno;
+
+end if;
+end//

@@ -1,0 +1,41 @@
+create or replace trigger ticketcancel
+after delete on reserv
+for each row
+begin
+
+
+if old.seat_class='ac_1class'
+then
+update train set ac_1class=ac_1class+old.ticket
+where tno=old.tno;
+elseif old.seat_class='ac_2class'
+then
+update train set ac_2class=ac_2class+old.ticket
+where tno=old.tno;
+elseif old.seat_class='ac_3class'
+then
+update train set ac_3class=ac_3class+old.ticket
+where tno=old.tno;
+else
+update train set sleeper_class=sleeper_class+old.ticket
+where tno=old.tno;
+
+end if;
+
+
+insert into ticketcancel
+values(old.tno,old.tname,old.name,old.age,old.pnr_no,old.ticket,old.source,old.destination,old.amount,old.seat_class,old.status);
+
+
+select min(datetimes),ticket into t  from reserv 
+where status='Waiting List'
+
+while old.status='Confirmed':
+	do
+	if old.ticket>0 then
+		old.ticket=old.ticket + ;
+	end if;		
+end while;
+
+
+end //

@@ -1,0 +1,20 @@
+ Table  | Create Table
+
+ CREATE TABLE `reserv` (
+ `tname` varchar(100) DEFAULT NULL,
+ `seat_class` varchar(50) DEFAULT NULL,
+ `ticket` int(3) DEFAULT NULL,
+ `status` varchar(20) DEFAULT NULL,
+ `age` int(3) DEFAULT NULL,
+ `name` varchar(100) DEFAULT NULL,
+ `tno` int(20) DEFAULT NULL,
+ `pnr_no` int(100) NOT NULL AUTO_INCREMENT,
+ `source` varchar(50) DEFAULT NULL,
+ `destination` varchar(50) DEFAULT NULL,
+ `amount` double(10,2) DEFAULT NULL,
+ `datetimes` datetime DEFAULT NULL,
+ `wl` int(5) DEFAULT '0',
+ PRIMARY KEY (`pnr_no`)
+ ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=latin1 |
+
+

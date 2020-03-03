@@ -1,0 +1,8 @@
+create or replace trigger insert_reserv
+before insert on reserv
+for each row
+begin
+
+if 
+select ticket from train 
+where 

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+{% url 'address:create' as createaddress %}
+{% url 'address:reuse' as reuseaddress %}
+
+{% if order_obj.billing_profile %}
+
+    Order Id= {{order_obj.order_id}}<br/>
+    Sub Total ={{order_obj.order_total}}<br/>
+    Total = {{order_obj.total}}<br/>
+
+    {% if not order_obj.shipping_address %}
+    <div class="row">
+        <div class="col-6">
+            <h3>Shipping Address</h3>
+            {% include 'addresses/newform.html' with action_url=createaddress next_url=request.build_absolute_uri type='shipping' form=address %}
+        </div>
+        <div class="col-6">
+            <h3>Shipping Address</h3>
+            {% include 'addresses/prev-address.html' with action_url=reuseaddress next_url=request.build_absolute_uri type='shipping' address_qs=address_qs %}
+        </div>
+    </div>
+    {% elif not order_obj.billing_address %}
+    <div class="row">
+        <div class="col-6">
+            <h3>Billing Address</h3>
+            {% include 'addresses/newform.html' with action_url=createaddress next_url=request.build_absolute_uri type='billing' form=address %}
+        </div>
+        <div class="col-6">
+            {% include 'addresses/prev-address.html' with action_url=reuseaddress next_url=request.build_absolute_uri type='billing' address_qs=address_qs %}
+        </div>
+    </div>  
+    {% else %}
+        
+        Shipping Address: {{ order_obj.shipping_address.get_address }}
+        <br/>
+        Billing Address : {{ order_obj.billing_address.get_address }}
+        <form method="POST">
+            {% csrf_token %}
+        {% include 'billing/payment-method.html' with object=order_obj billing_profile=order_obj.billing_profile %}
+        </form>    
+    {% endif %}
+{% else %}
+    {% include 'accounts/snippets/form.html' with next_url=request.build_absolute_uri form=loginform %}
+{% endif %}
+{% endblock %}

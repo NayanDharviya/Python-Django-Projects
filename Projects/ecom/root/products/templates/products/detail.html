@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+<h1>{{object.pname}} @ Rs. {{object.price}}
+    {% include 'products/snippets/update-cart.html' with product=object cart=cart_obj %}
+</h1>
+    {{ object.createDate|timesince }} ago
+<p style="text-align: justify-content flex-start">{{object.description|linebreaks}}</p>
+{% if object.image %}
+<img src="{{object.image.url}}" alt="Not found" class="img-fluid">
+{% endif %}
+</div>
+{% endblock %}
