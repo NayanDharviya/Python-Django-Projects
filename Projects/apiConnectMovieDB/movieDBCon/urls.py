@@ -18,7 +18,7 @@ from django.urls import path
 from loadapi.views import *
 
 urlpatterns = [
-    path("popular", popular_movies, name="popular"),
+    #path("popular", popular_movies, name="popular"),
     path("toprated", toprated_movies, name="toprated"),
     path("upcoming", upcoming_movies, name="upcoming"),
     path("nowplaying", nowplaying_movies, name="nowplaying"),
